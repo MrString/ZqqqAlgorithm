@@ -111,6 +111,44 @@ namespace MySort {
 		mergesort(a, 0, size-1, tempArray);
   	}
 
+	//quickSort
+	template<typename T>
+	int Partition(vector<T> &a, int low, int high)
+	{
+		int i = low, j = high;
+		T x = a[low];
+		while(i < j)
+		{
+			while(i<j && a[j] >= x)
+				j--;
+			if(i < j)
+			{
+				a[i] = a[j];
+				i++;
+			}
+			
+			while(i<j && a[i] <x)
+				i++;
+			if(i < j)
+			{
+				a[j] = a[i];
+				j--;
+			}
+		}
+		a[i] = x;
+		return i;
+	}
+	
+	template<typename T>
+	void QuickSort(vector<T> &a, int low, int high)
+	{
+		if(low < high)
+		{
+			int q = Partition(a, low, high);
+			QuickSort(a, low, q-1);
+			QuickSort(a, q+1, high);
+		}
+	}
 
 /*
  *  初始化和处理的函数
@@ -175,6 +213,13 @@ namespace MySort {
 			InitVec(ivec,MAX);
 			TimeInit();
 			MergeSort(ivec, max);
+			TimeCount();
+		}
+		else if(str == "Q")
+		{
+			InitVec(ivec,MAX);
+			TimeInit();
+			QuickSort(ivec, 0, max);
 			TimeCount();
 		}
     }
